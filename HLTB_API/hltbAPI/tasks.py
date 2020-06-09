@@ -6,30 +6,7 @@ from urllib.request import urlopen, Request
 from urllib import parse
 from .models import Currency
  
-baseURL = 'https://howlongtobeat.com'
-searchSuffix = 'search_results.php'
 
-def getSearchResult(name):
-    body = {
-          'queryString': name,
-          't': 'games',
-          'sorthead': 'popular',
-          'sortd': 'Normal Order',
-          'plat': '',
-          'length_type': 'main',
-          'length_min': '',
-          'length_max': '',
-          'detail': '0'
-        }
-
-    data = parse.urlencode(body).encode("utf-8")
-    print(data)
-    req = Request('{}/{}'.format(baseURL,searchSuffix),headers={'User-Agent': 'Mozilla/5.0'})
-    with urlopen(req,data=data) as f:
-        resp = f.read()
-        print(resp)
-
-print(getSearchResult('Halo'))
 
 # @shared_task
 # # some heavy stuff here
