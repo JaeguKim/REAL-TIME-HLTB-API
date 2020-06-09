@@ -1,9 +1,6 @@
 from time import sleep
 import json
 from celery import shared_task
-from bs4 import BeautifulSoup
-from urllib.request import urlopen, Request
-from urllib import parse
 from .models import Currency
  
 
