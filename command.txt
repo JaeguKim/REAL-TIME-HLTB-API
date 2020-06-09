@@ -1,0 +1,12 @@
+[VIRTUAL ENV]
+source hltbAPI_env/bin/activate
+
+[SERVER]
+python manage.py runserver
+
+[CELERY]
+celery -A HLTB_API worker -l info
+
+[RABBITMQ-SERVER]
+export PATH=$PATH:/usr/local/opt/rabbitmq/sbin
+rabbitmq-server
