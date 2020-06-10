@@ -34,7 +34,13 @@ def parseHTML(soup):
             detailId = gameTitleAnchor.get('href')[gameTitleAnchor.get('href').index('?id=')+4:]
             print(gameName)
             print(detailId)
-
+            gameImage = gameTitleAnchor.findAll('img')[0].get('src')
+            print(gameImage)
+            timeLabels = []
+            main = 0; mainExtra = 0; complete = 0
+            soup.select("div[class*=span3]")
+            for gameTimeInfo in  elem.select("div[class*=search_list_tidbit]"):
+                print(gameTimeInfo)
 
 def test():
     htmlScraper = HtmlScraper()
