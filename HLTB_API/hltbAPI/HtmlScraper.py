@@ -31,7 +31,10 @@ def parseHTML(soup):
         for elem in liElements:
             gameTitleAnchor = elem.findAll('a')[0]
             gameName = gameTitleAnchor.get('title')
+            detailId = gameTitleAnchor.get('href')[gameTitleAnchor.get('href').index('?id=')+4:]
             print(gameName)
+            print(detailId)
+
 
 def test():
     htmlScraper = HtmlScraper()
