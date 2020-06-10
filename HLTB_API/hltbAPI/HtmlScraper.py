@@ -19,21 +19,29 @@ class HtmlScraper:
             'detail': '0'
         }
         data = parse.urlencode(body).encode("utf-8")
-        print(data)
         req = Request('{}/{}'.format(self.BASE_URL,self.SEARCH_SUFFIX),headers={'User-Agent': 'Mozilla/5.0'})
         with urlopen(req,data=data) as f:
             resp = f.read().decode('utf-8')
             return resp
         return None
 
+def parseHTML(soup):
+    if len(soup.h3) > 0:
+        liElements = soup.findAll('li')
+        for elem in liElements:
+            gameTitleAnchor = elem.findAll('a')[0]
+            gameName = gameTitleAnchor.get('title')
+            print(gameName)
+
 def test():
     htmlScraper = HtmlScraper()
     res = htmlScraper.getSearchResult(name='Halo')
     f_write = open('output.html','w')
     f_write.write(res)
-    soup = bs(res) 
-    prettyHTML = soup.prettify()
-    print(prettyHTML)
+    soup = bs(res,features="html.parser")
+    parseHTML(soup)
+    #prettyHTML = soup.prettify()
+    #print(prettyHTML)
     
 
 test()
