@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'hltbAPI',  
+    'hltbAPI.apps.HltbApiConfig',  
 ]
 
 MIDDLEWARE = [

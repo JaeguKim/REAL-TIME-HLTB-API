@@ -1,8 +1,7 @@
 from django.contrib import admin
-from django.urls import path
-from hltbAPI.views import ListCurrencyView
+from django.urls import path,include
  
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', ListCurrencyView.as_view())
+    path('hltb/',include('hltbAPI.urls')),
 ]

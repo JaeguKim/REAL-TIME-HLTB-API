@@ -1,13 +1,14 @@
 from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen, Request
 from urllib import parse
-from HowLongToBeatEntry import HowLongToBeatEntry
+from .HowLongToBeatEntry import HowLongToBeatEntry
+from typing import List
 
 class HtmlScraper:
     BASE_URL = 'https://howlongtobeat.com'
     SEARCH_SUFFIX = 'search_results.php'
 
-    def search(self,name):
+    def search(self,name:str)->List[HowLongToBeatEntry]:
         resHtml = self.getSearchResult(name)
         if resHtml:
             soup = bs(resHtml)
@@ -15,7 +16,7 @@ class HtmlScraper:
             return parsedHtml
         return None
 
-    def getSearchResult(self,name):
+    def getSearchResult(self,name:str)->str:
         body = {
             'queryString': name,
             't': 'games',
