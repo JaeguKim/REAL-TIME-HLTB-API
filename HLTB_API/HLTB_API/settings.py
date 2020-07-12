@@ -24,7 +24,7 @@ SECRET_KEY = 'pp+=!o3i8b_cu9ps*3*&!5^_#wu_=fgpwk@@3k^)9uf)*22or_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hltb-api-env.eba-2upuxuta.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['hltb-api-env.eba-2upuxuta.us-west-2.elasticbeanstalk.com','127.0.0.1']
 
 
 # Application definition
@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hltbAPI.apps.HltbApiConfig',  
+    'hltbAPI.apps.HltbApiConfig',
+    'metacritic.apps.MetacriticConfig',
 ]
 
 MIDDLEWARE = [
