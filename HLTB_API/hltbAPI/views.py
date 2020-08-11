@@ -6,7 +6,7 @@ def gameTimeView(request,title):
     json = {}
     res = HtmlScraper().search(title)
     if len(res) == 0:
-        json['results'] = 'failed'
+        json['error'] = 'Title doesn\'t exist'
         return JsonResponse(json,status=500)
     json['results'] = 'Success'
     for item in res:
