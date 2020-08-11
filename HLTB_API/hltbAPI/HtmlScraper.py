@@ -37,34 +37,37 @@ class HtmlScraper:
 
     def parseHtml(self,soup):
         results = []
-        if len(soup.h3) > 0:
-            liElements = soup.findAll('li')
-            for elem in liElements:
-                gameTitleAnchor = elem.findAll('a')[0]
-                gameName = gameTitleAnchor.get('title')
-                gameDescription = ''
-                playableOn = []
-                detailId = gameTitleAnchor.get('href')[gameTitleAnchor.get('href').index('?id=')+4:]
-                gameImage = gameTitleAnchor.findAll('img')[0].get('src')
-                timeLabels = []
-                main = 0; mainExtra = 0; complete = 0
-                gameTimeDivTags = elem.select("div[class*=search_list_tidbit]")
-                #print(gameName)
-                for i in range(len(gameTimeDivTags)):
-                    line = str(gameTimeDivTags[i].string)
-                    if line.startswith('Main Story') or line.startswith('Single-Player') or line.startswith('Solo'):
-                        main = self.parseTime(str(gameTimeDivTags[i+1].string))
-                        timeLabels.append('gameplayMain')
-                        #print('MAIN STORY : {}'.format(main))
-                    elif line.startswith('Main + Extra') or line.startswith('Co-Op'):
-                        mainExtra = self.parseTime(str(gameTimeDivTags[i+1].string))
-                        timeLabels.append('gameplayMainExtra')
-                        #print('MAIN EXTRA : {}'.format(mainExtra))
-                    elif line.startswith('Completionist') or line.startswith('Vs.'):
-                        complete = self.parseTime(str(gameTimeDivTags[i+1].string))
-                        timeLabels.append('gameplayCompletionist')
-                        #print('COMPLETIONIST : {}'.format(complete))
-                results.append(HowLongToBeatEntry(detailId,gameName,gameDescription,playableOn,gameImage,timeLabels,main,mainExtra,complete))
+        try:
+            if len(soup.h3) > 0:
+                liElements = soup.findAll('li')
+                for elem in liElements:
+                    gameTitleAnchor = elem.findAll('a')[0]
+                    gameName = gameTitleAnchor.get('title')
+                    gameDescription = ''
+                    playableOn = []
+                    detailId = gameTitleAnchor.get('href')[gameTitleAnchor.get('href').index('?id=')+4:]
+                    gameImage = gameTitleAnchor.findAll('img')[0].get('src')
+                    timeLabels = []
+                    main = 0; mainExtra = 0; complete = 0
+                    gameTimeDivTags = elem.select("div[class*=search_list_tidbit]")
+                    #print(gameName)
+                    for i in range(len(gameTimeDivTags)):
+                        line = str(gameTimeDivTags[i].string)
+                        if line.startswith('Main Story') or line.startswith('Single-Player') or line.startswith('Solo'):
+                            main = self.parseTime(str(gameTimeDivTags[i+1].string))
+                            timeLabels.append('gameplayMain')
+                            #print('MAIN STORY : {}'.format(main))
+                        elif line.startswith('Main + Extra') or line.startswith('Co-Op'):
+                            mainExtra = self.parseTime(str(gameTimeDivTags[i+1].string))
+                            timeLabels.append('gameplayMainExtra')
+                            #print('MAIN EXTRA : {}'.format(mainExtra))
+                        elif line.startswith('Completionist') or line.startswith('Vs.'):
+                            complete = self.parseTime(str(gameTimeDivTags[i+1].string))
+                            timeLabels.append('gameplayCompletionist')
+                            #print('COMPLETIONIST : {}'.format(complete))
+                    results.append(HowLongToBeatEntry(detailId,gameName,gameDescription,playableOn,gameImage,timeLabels,main,mainExtra,complete))
+        except:
+            return []
         return results
             
     def parseTime(self,text):
@@ -87,23 +90,3 @@ class HtmlScraper:
         if '½' in time:
             return 0.5 + int(time[0:text.index('½')])
         return int(time)
-
-def test():
-    res = HtmlScraper().search(name='last of us')
-    testEntry(res)
-
-def testEntry(res):
-    for entry in res:
-        print('===================================')
-        print(entry.detailId)
-        print(entry.gameName)
-        print(entry.description)
-        print(entry.playableOn)
-        print(entry.imageUrl)
-        print(entry.timeLabels)
-        print(entry.gameplayMain)
-        print(entry.gameplayMainExtra)
-        print(entry.gameplayCompletionist)
-        print('===================================')
-
-test()

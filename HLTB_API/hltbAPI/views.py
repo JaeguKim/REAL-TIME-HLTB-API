@@ -3,8 +3,12 @@ from django.http import HttpResponse,JsonResponse
 from .HtmlScraper import HtmlScraper
 
 def gameTimeView(request,title):
-    res = HtmlScraper().search(title)
     json = {}
+    res = HtmlScraper().search(title)
+    if len(res) == 0:
+        json['results'] = 'failed'
+        return JsonResponse(json)
+    json['results'] = 'Success'
     for item in res:
         info = {}
         info['completionist'] = item.gameplayCompletionist

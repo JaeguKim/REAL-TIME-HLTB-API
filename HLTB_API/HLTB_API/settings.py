@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'hltbAPI.apps.HltbApiConfig',
-    'metacritic.apps.MetacriticConfig',
 ]
 
 MIDDLEWARE = [
